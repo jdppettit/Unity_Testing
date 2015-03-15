@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\EnemyAI.js" />
      <Compile Include="Assets\Scripts\PlayerAttributes.js" />
+     <Compile Include="Assets\Scripts\Spawner.js" />
      <Compile Include="Assets\Scripts\SwordAttributes.js" />
      <None Include="Assets\Standard Assets\Vehicles\Car\Shaders\DiffuseReflectiveShader.shader" />
      <None Include="Assets\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Simple.shader" />

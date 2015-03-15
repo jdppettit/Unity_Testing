@@ -2,6 +2,8 @@
 private var AttackTime : float;
 private var MoveDirection : Vector3 = Vector3.zero;
 
+var RoamRange : int = 5;
+
 var Target : Transform;
 var LookAtDistance = 25.0;
 var ChaseRange = 15.0;
@@ -43,13 +45,8 @@ function enemyLookAt ()
 
 function enemyChase ()
 {
-	GetComponent.<Renderer>().material.color = Color.yellow;
-	
-	MoveDirection = transform.forward;
-	MoveDirection *= MoveSpeed;
-	
-	MoveDirection.y -= Gravity * Time.deltaTime;
-	Controller.Move(MoveDirection * Time.deltaTime);
+	GetComponent.<Renderer>().material.color = Color.red;
+	transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
 }
 
 function enemyAttack ()
@@ -62,13 +59,24 @@ function enemyAttack ()
 	}
 }
 
+function enemyRoam ()
+{
+	var targetPosition: Vector3 = Vector3(Random.Range(1, 500), 1, Random.Range(1, 500));
+	var rotation = Quaternion.LookRotation(targetPosition - transform.position);
+	transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * Damping);
+	transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
+}
+
 function Start () 
 {
 	AttackTime = Time.time;
+	Target = GameObject.Find("Player").transform;
+	//InvokeRepeating("enemyRoam", 1, 1);
 }
 
 function Update () 
 {
+	enemyRoam();
 	Distance = Vector3.Distance(Target.position, transform.position);
 	
 	if (Distance < LookAtDistance)
